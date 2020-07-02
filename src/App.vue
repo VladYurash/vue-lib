@@ -5,6 +5,5 @@
 </template>
 
 <style lang="sass">
-body
-  padding: 40px
+
 </style>

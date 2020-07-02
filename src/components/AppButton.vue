@@ -1,12 +1,17 @@
 <template>
   <router-link
     class="btn"
+    @click.native="clicked"
     :to="to"
+    :title="formattedTitle"
+    :disabled="disabled"
     :class="[
-      themes[theme], sizes[size]
+      themes[theme], sizes[size], {'disabled': disabled}
     ]"
   >
-    Sign in
+    <slot>
+      {{ text }}
+    </slot>
   </router-link>
 </template>
 
@@ -24,6 +29,16 @@
       }
     }),
     props: {
+      title: {
+        required: false,
+        type: String,
+        default: ''
+      },
+      text: {
+        required: false,
+        type: String,
+        default: ''
+      },
       theme: {
         required: false,
         type: String,
@@ -38,6 +53,22 @@
         required: false,
         type: Object,
         default: () => ({name: 'Home'})
+      },
+      disabled: {
+        required: false,
+        type: Boolean,
+        default: false
+      }
+    },
+    computed: {
+      formattedTitle() {
+        return `${this.title} except cases when you need to deal with it`
+      }
+    },
+    methods: {
+      clicked(e) {
+        if (this.disabled) return
+        this.$emit('click', e)
       }
     }
   }
