@@ -1,6 +1,8 @@
 <template>
   <AppModal name="signin">
-    Sign in
+    <template v-slot="{ opt }">
+      Sign in {{ opt.name }}
+    </template>
   </AppModal>
 </template>
 

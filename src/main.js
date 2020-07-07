@@ -10,8 +10,8 @@ const Modal = {
     this.event = new Vue()
 
     Vue.prototype.$modal = {
-      show(modal) {
-        Modal.event.$emit('show', modal)
+      show(modal, opt = {}) {
+        Modal.event.$emit('show', modal, opt)
       },
       $event: this.event
     }

@@ -21,8 +21,8 @@
 <!--      <AppTextarea name="bio" v-model="form.bio" />-->
 <!--    </div>-->
 
-    <SigninModal />
-    <button class="btn btn-primary" @click.prevent="$modal.show('signin')">Open modal</button>
+    <SigninModal name="Alex" />
+    <button class="btn btn-primary" @click.prevent="openModal">Open modal</button>
   </div>
 </template>
 
@@ -55,6 +55,9 @@ export default {
   methods: {
     clicked () {
       console.log('Yep')
+    },
+    openModal() {
+      this.$modal.show('signin', { name: 'Alex' });
     }
   }
 }
