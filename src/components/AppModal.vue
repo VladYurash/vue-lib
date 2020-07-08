@@ -1,9 +1,9 @@
 <template>
   <transition name="modal">
     <div v-if="visible">
-      <div class="app-modal" @click.prevent="visible = false"></div>
+      <div class="app-modal" @click.prevent="$modal.hide(name)"></div>
       <div class="app-modal__inner">
-        <button @click.prevent="visible = false">Close modal</button>
+        <button @click.prevent="$modal.hide(name)">Close modal</button>
         <slot :opt="opt" />
       </div>
     </div>
@@ -25,11 +25,31 @@ export default {
   },
   beforeMount() {
     this.$modal.$event.$on('show', (modal, opt) => {
+      if (this.name !== modal) return
+
+      this.opt = opt
+      if (!this.$listeners['before-open']) {
+        this.setVisible()
+        return
+      }
+      this.$emit('before-open', () => {
+        this.setVisible()
+      })
+    })
+
+    this.$modal.$event.$on('hide', modal => {
       if (this.name === modal) {
-        this.opt = opt
-        this.visible = true
+        this.setHidden()
       }
     })
+  },
+  methods: {
+    setVisible() {
+      this.visible = true
+    },
+    setHidden() {
+      this.visible = false
+    }
   },
   mounted() {
     document.addEventListener('keydown', e => {

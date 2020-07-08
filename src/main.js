@@ -4,7 +4,7 @@ import router from './router'
 
 Vue.config.productionTip = false
 
-/* eslint-disable */
+
 const Modal = {
   install(Vue) {
     this.event = new Vue()
@@ -12,6 +12,9 @@ const Modal = {
     Vue.prototype.$modal = {
       show(modal, opt = {}) {
         Modal.event.$emit('show', modal, opt)
+      },
+      hide(modal) {
+        Modal.event.$emit('hide', modal)
       },
       $event: this.event
     }
